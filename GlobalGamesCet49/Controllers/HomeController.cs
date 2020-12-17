@@ -1,11 +1,22 @@
-﻿using GlobalGamesCet49.Models;
+﻿using GlobalGamesCet49.Dados;
+using GlobalGamesCet49.Dados.Entidades;
+using GlobalGamesCet49.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace GlobalGamesCet49.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly DataContext _context;
+
+        public HomeController(DataContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -18,12 +29,27 @@ namespace GlobalGamesCet49.Controllers
         }
 
         public IActionResult Servicos()
+
         {
 
             return View();
         }
 
-       
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Mensagem")] ContactoOrcamento ContactoOrcamento)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(ContactoOrcamento);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(ContactoOrcamento);
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
