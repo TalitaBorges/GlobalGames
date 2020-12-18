@@ -3,6 +3,7 @@ using GlobalGamesCet49.Dados.Entidades;
 using GlobalGamesCet49.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GlobalGamesCet49.Controllers
@@ -50,11 +51,46 @@ namespace GlobalGamesCet49.Controllers
             return View(ContactoOrcamento);
         }
 
+        
+        public IActionResult Inscricoes()
+
+        {
+
+            return View();
+        }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Nome,Apelido,Morada,Localidade,CartaoCidadao,DataNascimento")] Jogador Jogador)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(Jogador);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(Jogador);
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+
+
+
+        private bool ClienteExists(int id)
+        {
+            return _context.Jogador.Any(e => e.Id == id);
+        }
     }
+
 }
+
