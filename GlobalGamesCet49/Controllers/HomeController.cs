@@ -63,7 +63,7 @@ namespace GlobalGamesCet49.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Apelido,Morada,Localidade,CartaoCidadao,DataNascimento")] Jogador Jogador)
+        public async Task<IActionResult> Inscricoes([Bind("Id,Nome,Apelido,Morada,Localidade,CartaoCidadao,DataNascimento")] Jogador Jogador)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace GlobalGamesCet49.Controllers
 
 
 
-        private bool ClienteExists(int id)
+        private bool JogadorExists(int id)
         {
             return _context.Jogador.Any(e => e.Id == id);
         }
