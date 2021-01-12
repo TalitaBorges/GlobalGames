@@ -1,10 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace GlobalGamesCet49.Dados.Entidades
+﻿namespace GlobalGamesCet49.Models
 {
-    public class Jogador : IEntity
-    {
+    using System.ComponentModel.DataAnnotations;
+    using GlobalGamesCet49.Dados.Entidades;
+    using Microsoft.AspNetCore.Http;
+    
 
+    public class InscricoesViewModel : Jogador
+    {
+        [Display(Name = "Image")]
+        public IFormFile ImageFile { get; set; }
+
+
+
+        /*
         public int Id { get; set; }
 
         public string Nome { get; set; }
@@ -22,6 +30,6 @@ namespace GlobalGamesCet49.Dados.Entidades
         public string DataNascimento { get; set; }
 
         [Display(Name = "Image")]
-        public string ImageURL { get; set; }
+        public string ImageURL { get; set; }*/
     }
 }
